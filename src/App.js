@@ -12,6 +12,11 @@ const getEmbedUrl = (url) => {
   try {
     const parsed = new URL(url);
 
+    // Force mobile URLs to standard www
+    if (parsed.hostname === "m.youtube.com") {
+      parsed.hostname = "www.youtube.com";
+    }
+
     if (parsed.hostname.includes("youtube.com") && parsed.pathname === "/watch") {
       const videoId = parsed.searchParams.get("v");
       return `https://www.youtube.com/embed/${videoId}`;
@@ -26,6 +31,8 @@ const getEmbedUrl = (url) => {
   } catch {
     return null;
   }
+};
+
 };
 
 function App() {
